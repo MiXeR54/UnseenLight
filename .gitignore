@@ -19,3 +19,8 @@ hs_err_pid*
 
 # Common working directory
 run
+
+#Keys
+pat_modrinth
+# Modrinth PAT (local only, never commit)
+pat_modrinth
