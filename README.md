@@ -10,11 +10,12 @@ farms and mob-proofing with no commands, no creative mode and no resource packs.
 
 ## Crafting
 
-```
-G G G
-G T G        G = Glass Pane, T = Torch
-G G G        -> 1x Light (level 15)
-```
+<p align="center">
+  <img src="docs/crafting.png" width="480"
+       alt="UnseenLight crafting recipe: 8 glass panes around a torch craft one invisible light block">
+</p>
+
+8 glass panes + 1 torch -> 1 invisible light (level 15).
 
 The shape, ingredients, yield and light level are all configurable. The recipe shows up in the
 recipe book on join (also configurable).
