@@ -5,7 +5,7 @@
 
 A Paper plugin that makes the vanilla **invisible light block** (`minecraft:light`) a survival
 feature: craft it on a workbench, place it in any dark spot, take it back down with a right
-click — no commands, no creative mode.
+click - no commands, no creative mode.
 
 ## Crafting
 
@@ -22,10 +22,10 @@ recipe book on join (also configurable).
 
 | Action | How |
 |---|---|
-| **Place** | Hold the light item and right-click any dark spot — plain vanilla placement |
+| **Place** | Hold the light item and right-click any dark spot - plain vanilla placement |
 | **Remove** | Hold **any block** and right-click the spot the light occupies; the light pops back as an item instead of your block being placed |
 | **Remove behind chests/doors** | Sneak + right-click (a plain click opens the container, like vanilla) |
-| **See placed lights** | Hold a light item — vanilla renders them — or run `/ul show` for a particle highlight |
+| **See placed lights** | Hold a light item - vanilla renders them - or run `/ul show` for a particle highlight |
 
 A light block is invisible and has no hitbox, so your crosshair passes through it; aim so that
 the block you are "placing" would land in the light's spot.
@@ -33,13 +33,13 @@ the block you are "placing" would land in the light's spot.
 ## What the plugin guards against
 
 `minecraft:light` is replaceable, so in vanilla almost anything overwrites it silently. UnseenLight
-intercepts every such path — the light either pops properly (permission checked, land protection
+intercepts every such path - the light either pops properly (permission checked, land protection
 consulted, item returned) or stays protected:
 
 - block placement into the light's spot, from either hand, in any game mode;
 - lava and powder snow buckets (water just waterlogs the light and is left alone);
 - falling blocks landing in the spot (the item is compensated);
-- the vanilla break while holding a light item (lights have no loot table — drop-mode is honoured);
+- the vanilla break while holding a light item (lights have no loot table - drop-mode is honoured);
 - Crafter blocks crafting the recipe with nobody's permission to check (optional, `recipe.allow-crafter`);
 - `/minecraft:reload` wiping plugin recipes (the recipe re-registers itself).
 
@@ -66,7 +66,7 @@ Alias: `/ul`
 
 ## Configuration
 
-Everything lives in `config.yml`: the recipe (shape, ingredients, yield, light level 0–15),
+Everything lives in `config.yml`: the recipe (shape, ingredients, yield, light level 0-15),
 sounds and particles for placing/removing, the highlighter (radius, duration), and every player
 message in [MiniMessage](https://docs.papermc.io/adventure/minimessage/format/) format.
 
