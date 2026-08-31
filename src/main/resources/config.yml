@@ -1,0 +1,76 @@
+# UnseenLight - crafting, placing and removing invisible light (minecraft:light).
+
+# Light level of the crafted block: 0-15.
+light-level: 15
+
+recipe:
+  enabled: true
+  # Crafting shape. Up to three rows, up to three characters per row. A space is an empty slot.
+  shape:
+    - "PPP"
+    - "PTP"
+    - "PPP"
+  # Shape character -> material (names from org.bukkit.Material). AIR is not allowed.
+  ingredients:
+    P: GLASS_PANE
+    T: TORCH
+  # How many light blocks one craft yields.
+  result-amount: 1
+  # Unlock the recipe in the recipe book when a player joins.
+  auto-discover: true
+  # Allow Crafter blocks to craft this recipe. Crafters have no player behind them,
+  # so the unseenlight.craft permission cannot be checked there.
+  allow-crafter: true
+
+placement:
+  # Check the unseenlight.place permission when a light block is placed.
+  check-permission: true
+  # Sound played on placement. An empty string ("") means no sound.
+  # Both BLOCK_AMETHYST_BLOCK_CHIME and block.amethyst_block.chime are accepted.
+  sound: BLOCK_AMETHYST_BLOCK_CHIME
+  particles: true
+
+removal:
+  # Removal: right click the spot an invisible light block sits in.
+  # Any block placement, lava/powder snow bucket or falling block that would silently
+  # overwrite a light is intercepted as well - the light pops instead of vanishing.
+  enabled: true
+  # What happens to the light block that was taken down:
+  #   GROUND    - drops as an item on the ground
+  #   INVENTORY - goes straight back into the inventory (drops at the feet when it is full)
+  #   DESTROY   - disappears without a trace
+  drop-mode: GROUND
+  # true  - a block must be held to remove light (same as on the reference server)
+  # false - any item, and an empty hand, removes light as well
+  require-block-in-hand: true
+  # Require sneaking (SHIFT) to remove light.
+  # Regardless of this setting, light in front of an interactive block (chests, doors, crafting
+  # tables) is only removed while sneaking, otherwise those blocks would simply open instead.
+  require-sneak: false
+  sound: BLOCK_GLASS_BREAK
+  particles: true
+
+highlight:
+  # /unseenlight show - briefly marks invisible light around the player with particles.
+  enabled: true
+  # Scan radius in blocks, 1-32. Only loaded chunks are scanned.
+  radius: 16
+  duration-seconds: 10
+  # How often the particles are redrawn, in ticks.
+  period-ticks: 10
+
+# MiniMessage format: https://docs.papermc.io/adventure/minimessage/format/
+# An empty string ("") disables a message. Keep the quotes: leaving a value
+# completely empty after the colon falls back to the built-in default instead.
+messages:
+  prefix: "<gray>[</gray><gold>UnseenLight</gold><gray>]</gray> "
+  no-permission: "<red>You are not allowed to do that."
+  light-removed: "<gray>Invisible light removed."
+  light-given: "<gray>Gave <white><amount></white> light of level <white><level></white> to <white><player></white>"
+  no-targets: "<red>No players matched the selector."
+  config-reloaded: "<green>Configuration reloaded."
+  config-load-failed: "<red>config.yml is empty or invalid, built-in defaults are in effect. Check the console."
+  highlight-found: "<gray>Highlighted <white><count></white> light sources within <white><radius></white> blocks."
+  highlight-empty: "<gray>No invisible light nearby."
+  highlight-disabled: "<red>Highlighting is disabled in the configuration."
+  players-only: "<red>This command can only be used by a player."

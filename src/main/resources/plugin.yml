@@ -1,0 +1,28 @@
+name: UnseenLight
+version: '${version}'
+
+main: dev.chernykh.unseenLight.UnseenLight
+api-version: '26.2'
+load: POSTWORLD
+description: Craftable invisible light - crafting, placing and removing minecraft:light in survival.
+author: 'MiXeR54 (chernykh.dev)'
+
+permissions:
+  unseenlight.craft:
+    description: Allows crafting the invisible light block.
+    default: true
+  unseenlight.place:
+    description: Allows placing the invisible light block.
+    default: true
+  unseenlight.remove:
+    description: Allows removing a placed invisible light block.
+    default: true
+  unseenlight.command.reload:
+    description: Allows /unseenlight reload.
+    default: op
+  unseenlight.command.give:
+    description: Allows /unseenlight give.
+    default: op
+  unseenlight.command.show:
+    description: Allows /unseenlight show.
+    default: true
