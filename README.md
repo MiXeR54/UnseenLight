@@ -3,9 +3,10 @@
 [![bStats Servers](https://img.shields.io/bstats/servers/33769)](https://bstats.org/plugin/bukkit/UnseenLight/33769)
 [![Paper](https://img.shields.io/badge/Paper-26.2-blue)](https://papermc.io/)
 
-A Paper plugin that makes the vanilla **invisible light block** (`minecraft:light`) a survival
-feature: craft it on a workbench, place it in any dark spot, take it back down with a right
-click - no commands, no creative mode.
+UnseenLight is a Minecraft **Paper plugin** that adds **craftable invisible light** to survival:
+players craft the vanilla light block (`minecraft:light`) on a workbench, place invisible light
+sources in any dark spot and take them back down with a right click. Hidden lighting for builds,
+farms and mob-proofing with no commands, no creative mode and no resource packs.
 
 ## Crafting
 
