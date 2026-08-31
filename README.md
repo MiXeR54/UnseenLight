@@ -97,3 +97,7 @@ removal:
 
 Anonymous usage stats are collected via [bStats](https://bstats.org/plugin/bukkit/UnseenLight/33769).
 Server owners can opt out globally in `plugins/bStats/config.yml`.
+
+## License
+
+[MIT](LICENSE)
