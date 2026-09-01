@@ -1,4 +1,4 @@
-# Manual release pipeline: builds the plugin and publishes it to Modrinth and GitHub Releases.
+# Manual release pipeline: builds the plugin and publishes it to Modrinth, Hangar and GitHub Releases.
 # Triggered only by hand: Actions -> Release -> Run workflow.
 name: Release
 
@@ -28,6 +28,8 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      HANGAR_API_TOKEN: ${{ secrets.HANGAR_API_TOKEN }}
     steps:
       - uses: actions/checkout@v7
 
@@ -55,3 +57,24 @@ jobs:
           changelog: ${{ inputs.changelog }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-tag: v${{ inputs.version }}
+
+      # Hangar has no ready-made action worth depending on, so this talks to its REST API directly.
+      # Skipped when the HANGAR_API_TOKEN secret is not configured.
+      # Non-release builds go to the "Snapshot" channel, which must exist in the Hangar project.
+      - name: Publish to Hangar
+        if: env.HANGAR_API_TOKEN != ''
+        env:
+          VERSION: ${{ inputs.version }}
+          CHANNEL: ${{ inputs.type == 'release' && 'Release' || 'Snapshot' }}
+          CHANGELOG: ${{ inputs.changelog }}
+        run: |
+          set -euo pipefail
+          jwt=$(curl -sSf -X POST "https://hangar.papermc.io/api/v1/authenticate?apiKey=${HANGAR_API_TOKEN}" | jq -r .token)
+          payload=$(jq -n --arg v "$VERSION" --arg c "$CHANNEL" --arg d "$CHANGELOG" \
+            '{version: $v, channel: $c, description: $d,
+              platformDependencies: {PAPER: ["26.2"]},
+              files: [{platforms: ["PAPER"]}]}')
+          curl -sSf -X POST "https://hangar.papermc.io/api/v1/projects/UnseenLight/upload" \
+            -H "Authorization: HangarAuth ${jwt}" \
+            -F "versionUpload=${payload};type=application/json" \
+            -F "files=@build/libs/UnseenLight-${VERSION}.jar"

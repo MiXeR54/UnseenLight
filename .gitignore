@@ -20,7 +20,6 @@ hs_err_pid*
 # Common working directory
 run
 
-#Keys
+# Publishing tokens (local only, never commit)
 pat_modrinth
-# Modrinth PAT (local only, never commit)
-pat_modrinth
+pat_hangar
