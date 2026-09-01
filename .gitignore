@@ -21,5 +21,4 @@ hs_err_pid*
 run
 
 # Publishing tokens (local only, never commit)
-pat_modrinth
-pat_hangar
+pat_*

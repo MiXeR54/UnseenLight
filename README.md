@@ -1,5 +1,7 @@
 # UnseenLight
 
+[![Hangar](https://img.shields.io/hangar/dt/UnseenLight?label=Hangar&color=004ee9)](https://hangar.papermc.io/MiXeR54/UnseenLight)
+[![Modrinth](https://img.shields.io/modrinth/dt/OvVEUQSP?label=Modrinth&color=00af5c)](https://modrinth.com/plugin/unseenlight)
 [![bStats Servers](https://img.shields.io/bstats/servers/33769)](https://bstats.org/plugin/bukkit/UnseenLight/33769)
 [![Paper](https://img.shields.io/badge/Paper-26.2-blue)](https://papermc.io/)
 
@@ -84,7 +86,10 @@ removal:
 ## Installation
 
 1. Requires **Paper 26.2+** and **Java 25+**.
-2. Drop `UnseenLight-x.y.jar` into `plugins/` and restart.
+2. Download the jar from [Hangar](https://hangar.papermc.io/MiXeR54/UnseenLight),
+   [Modrinth](https://modrinth.com/plugin/unseenlight) or
+   [GitHub Releases](https://github.com/MiXeR54/UnseenLight/releases).
+3. Drop `UnseenLight-x.y.jar` into `plugins/` and restart.
 
 ## Building
 
