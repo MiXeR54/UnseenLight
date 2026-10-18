@@ -2,6 +2,7 @@ name: UnseenLight
 version: '${version}'
 
 main: dev.chernykh.unseenLight.UnseenLight
+# Oldest supported Paper release; the plugin only uses API that is stable from 26.2 to 26.3.
 api-version: '26.2'
 load: POSTWORLD
 description: Craftable invisible light - crafting, placing and removing minecraft:light in survival.

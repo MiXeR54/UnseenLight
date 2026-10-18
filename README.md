@@ -3,7 +3,7 @@
 [![Hangar](https://img.shields.io/hangar/dt/UnseenLight?label=Hangar&color=004ee9)](https://hangar.papermc.io/MiXeR54/UnseenLight)
 [![Modrinth](https://img.shields.io/modrinth/dt/OvVEUQSP?label=Modrinth&color=00af5c)](https://modrinth.com/plugin/unseenlight)
 [![bStats Servers](https://img.shields.io/bstats/servers/33769)](https://bstats.org/plugin/bukkit/UnseenLight/33769)
-[![Paper](https://img.shields.io/badge/Paper-26.2-blue)](https://papermc.io/)
+[![Paper](https://img.shields.io/badge/Paper-26.2%20%7C%2026.3-blue)](https://papermc.io/)
 
 UnseenLight is a Minecraft **Paper plugin** that adds **craftable invisible light** to survival:
 players craft the vanilla light block (`minecraft:light`) on a workbench, place invisible light
@@ -85,17 +85,19 @@ removal:
 
 ## Installation
 
-1. Requires **Paper 26.2+** and **Java 25+**.
+1. Requires **Paper 26.2 or 26.3** and **Java 25+**.
 2. Download the jar from [Hangar](https://hangar.papermc.io/MiXeR54/UnseenLight),
    [Modrinth](https://modrinth.com/plugin/unseenlight) or
    [GitHub Releases](https://github.com/MiXeR54/UnseenLight/releases).
 3. Drop `UnseenLight-x.y.jar` into `plugins/` and restart.
 
+What changed in each version is listed in the [changelog](CHANGELOG.md).
+
 ## Building
 
 ```
-./gradlew build        # -> build/libs/UnseenLight-1.0-SNAPSHOT.jar (shaded, ready to deploy)
-./gradlew runServer    # spins up a local Paper 26.2 test server with the plugin
+./gradlew build        # -> build/libs/UnseenLight-<version>.jar (shaded, ready to deploy)
+./gradlew runServer    # spins up a local Paper 26.3 test server with the plugin
 ```
 
 ## Metrics

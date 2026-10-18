@@ -29,6 +29,9 @@ public final class LightRecipeService {
     }
 
     /** Re-registers the recipe from the current config. Safe to call again on reload. */
+    // The resendRecipes overloads are deprecated in 26.3, where recipes are always resent, but on 26.2
+    // the plain overloads do not update clients. The plugin still supports 26.2, so it keeps the old calls.
+    @SuppressWarnings("deprecation")
     public void register() {
         unregister();
 
@@ -64,6 +67,7 @@ public final class LightRecipeService {
         }
     }
 
+    @SuppressWarnings("deprecation")
     public void unregister() {
         Bukkit.removeRecipe(key, true);
     }

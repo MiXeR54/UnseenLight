@@ -1,17 +1,11 @@
 # Manual release pipeline: builds the plugin and publishes it to Modrinth, Hangar and GitHub Releases.
 # Triggered only by hand: Actions -> Release -> Run workflow.
+# The version comes from gradle.properties, the changelog from the topmost entry of CHANGELOG.md.
 name: Release
 
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: "Version number, e.g. 1.1.0"
-        required: true
-      changelog:
-        description: "Changelog for this version"
-        required: false
-        default: "See the commit history."
       type:
         description: "Release channel"
         required: true
@@ -40,23 +34,42 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v6
 
+      - name: Read version and changelog
+        id: meta
+        run: |
+          set -euo pipefail
+          version=$(sed -n 's/^version=//p' gradle.properties | tr -d '\r')
+          if ! grep -m1 '^## ' CHANGELOG.md | grep -qF "## [${version}]"; then
+            echo "::error::The topmost CHANGELOG.md entry is not ${version}"
+            exit 1
+          fi
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          {
+            echo "changelog<<CHANGELOG_EOF"
+            # Body of the topmost "## [x.y.z]" section, without its heading.
+            awk '/^## /{n++; next} n==1' CHANGELOG.md | sed -e '/./,$!d'
+            echo "CHANGELOG_EOF"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Build
-        run: ./gradlew build -Pversion=${{ inputs.version }}
+        run: ./gradlew build
 
       - name: Publish to Modrinth and GitHub Releases
         uses: Kir-Antipov/mc-publish@v3.3.1
         with:
           modrinth-id: OvVEUQSP
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          files: build/libs/UnseenLight-${{ inputs.version }}.jar
-          name: UnseenLight ${{ inputs.version }}
-          version: ${{ inputs.version }}
+          files: build/libs/UnseenLight-${{ steps.meta.outputs.version }}.jar
+          name: UnseenLight ${{ steps.meta.outputs.version }}
+          version: ${{ steps.meta.outputs.version }}
           version-type: ${{ inputs.type }}
           loaders: paper
-          game-versions: "26.2"
-          changelog: ${{ inputs.changelog }}
+          game-versions: |
+            26.2
+            26.3
+          changelog: ${{ steps.meta.outputs.changelog }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          github-tag: v${{ inputs.version }}
+          github-tag: v${{ steps.meta.outputs.version }}
 
       # Hangar has no ready-made action worth depending on, so this talks to its REST API directly.
       # Skipped when the HANGAR_API_TOKEN secret is not configured.
@@ -64,15 +77,15 @@ jobs:
       - name: Publish to Hangar
         if: env.HANGAR_API_TOKEN != ''
         env:
-          VERSION: ${{ inputs.version }}
+          VERSION: ${{ steps.meta.outputs.version }}
           CHANNEL: ${{ inputs.type == 'release' && 'Release' || 'Snapshot' }}
-          CHANGELOG: ${{ inputs.changelog }}
+          CHANGELOG: ${{ steps.meta.outputs.changelog }}
         run: |
           set -euo pipefail
           jwt=$(curl -sSf -X POST "https://hangar.papermc.io/api/v1/authenticate?apiKey=${HANGAR_API_TOKEN}" | jq -r .token)
           payload=$(jq -n --arg v "$VERSION" --arg c "$CHANNEL" --arg d "$CHANGELOG" \
             '{version: $v, channel: $c, description: $d,
-              platformDependencies: {PAPER: ["26.2"]},
+              platformDependencies: {PAPER: ["26.2", "26.3"]},
               files: [{platforms: ["PAPER"]}]}')
           curl -sSf -X POST "https://hangar.papermc.io/api/v1/projects/UnseenLight/upload" \
             -H "Authorization: HangarAuth ${jwt}" \
